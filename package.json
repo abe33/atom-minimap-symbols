@@ -1,0 +1,13 @@
+{
+  "name": "minimap-symbols",
+  "main": "./lib/minimap-symbols",
+  "version": "0.0.0",
+  "description": "Displays symbols on the minimap",
+  "repository": "https://github.com/abe33/atom-minimap-symbols",
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "dependencies": {
+  }
+}
