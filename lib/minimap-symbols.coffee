@@ -4,6 +4,14 @@ module.exports =
   active: false
   views: {}
 
+  configDefaults:
+    grammars: [
+      'source.coffee'
+      'source.javascript'
+      'source.ruby'
+      'source.python'
+    ]
+
   isActive: -> @active
 
   activate: (state) ->
