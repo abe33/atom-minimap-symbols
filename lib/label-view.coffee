@@ -3,7 +3,7 @@
 module.exports =
 class LabelView extends View
   @content: ->
-    @div class: 'label label-default'
+    @div class: 'label highlight-info'
 
   initialize: (@tag, @position) ->
 
