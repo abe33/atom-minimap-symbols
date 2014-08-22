@@ -22,9 +22,9 @@ class MinimapSymbolsView extends View
       screenPosition = @minimapView.editor.screenPositionForBufferPosition(position)
       screenPosition = @minimapView.pixelPositionForScreenPosition(position)
 
-      view = new LabelView(name, top: screenPosition.top + 'px')
-      console.log this
-      @append(view)
+      view = new LabelView(name, screenPosition)
+      view.attach(this)
+      @views.push(view)
 
   removeViews: ->
     view.destroy() for view in @views
