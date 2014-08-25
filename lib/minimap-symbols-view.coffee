@@ -44,13 +44,23 @@ class MinimapSymbolsView extends View
       @updateViews()
 
   createViews: (tags) ->
+    tags = tags.sort (a,b) -> a.position.row - b.position.row
+
+    lastY = 0
+
     for {name, position} in tags
       screenPosition = @minimapView.editor.screenPositionForBufferPosition(position)
       screenPosition = @minimapView.pixelPositionForScreenPosition(position)
 
       view = new LabelView(name, screenPosition)
       view.attach(this)
+      viewTop = parseInt(view.css('top'))
+      if viewTop < lastY
+        view.css top: (viewTop = lastY) + 'px'
+
       @views.push(view)
+
+      lastY = viewTop + view.height()
 
   destroyViews: ->
     view.destroy() for view in @views
