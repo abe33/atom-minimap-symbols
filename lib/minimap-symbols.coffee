@@ -11,6 +11,7 @@ module.exports =
       'source.ruby'
       'source.python'
     ]
+    preventOverlappingLabels: true
 
   isActive: -> @active
 

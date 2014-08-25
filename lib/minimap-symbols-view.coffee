@@ -12,7 +12,11 @@ class MinimapSymbolsView extends View
   initialize: (@minimapView) ->
     @views = []
 
+    @subscribe atom.config.observe 'minimap-symbols.preventOverlappingLabels', =>
+      @updateViews()
     @subscribe @minimapView.editor, 'path-changed grammar-changed', =>
+      @subscribeToBuffer()
+    @subscribe @minimapView.editor, 'screen-lines-changed', =>
       @subscribeToBuffer()
     @subscribe atom.config.observe 'editor.fontSize', callNow: false, =>
       @subscribeToBuffer()
@@ -38,8 +42,7 @@ class MinimapSymbolsView extends View
 
     if @symbolizeCurrentGrammar()
       @buffer = @minimapView.editor.getBuffer()
-      @subscribe @buffer, 'saved', =>
-        @updateViews()
+      @subscribe @buffer, 'saved', => @updateViews()
 
       @updateViews()
 
@@ -67,9 +70,14 @@ class MinimapSymbolsView extends View
     @views = []
 
   updateViews: ->
-    @destroyViews()
-    @generateTags().then (tags) =>
-      @createViews(tags)
+    return if @updating
+
+    @updating = true
+    requestAnimationFrame =>
+      @destroyViews()
+      @generateTags().then (tags) =>
+        @createViews(tags)
+        @updating = false
 
   generateTags: ->
     new Promise (resolve, reject) =>
